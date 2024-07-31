@@ -1,6 +1,7 @@
-export const explorer = {
+export const data = {
   name: "react-tutorial",
   isFolder: true,
+  isRoot: true,
   folders: [
     {
       name: "node_modules",
