@@ -7,9 +7,10 @@ import Folder from "./components/Folder.jsx";
 const App = () => {
   const [explorer, setExplorer] = useState(data);
 
+  const [activeFolder, setActiveFolder] = useState("");
   return (
     <div className="p-8">
-      <Folder folder={explorer} />
+      <Folder folder={explorer} setActiveFolder={setActiveFolder} />
     </div>
   );
 };
