@@ -1,22 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Icon from "./Icon";
 import FolderIcon from "./FolderIcon";
 import ExplorerTitle from "./ExplorerTitle";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { RiFolderAddLine } from "react-icons/ri";
+import Menu from "./Menu";
 
 const Folder = ({ folder, handleNewFolder }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleIsOpen = (folder) => {
-    if (!folder.isFolder) return;
-    setIsOpen((open) => !open);
-  };
+  const [showMenu, setShowMenu] = useState(false);
+
+  const [position, setPosition] = useState({
+    x: 0,
+    y: 0,
+  });
 
   const [showInput, setShowInput] = useState({
     open: false,
     isFolder: false,
   });
+
+  const toggleIsOpen = (folder) => {
+    if (!folder.isFolder) return;
+    setIsOpen((open) => !open);
+  };
 
   const handleNewItem = (e, isFolder) => {
     setIsOpen(true);
@@ -37,11 +45,20 @@ const Folder = ({ folder, handleNewFolder }) => {
     }
   };
 
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    setShowMenu(true);
+    setPosition({ x: e.pageX, y: e.pageY });
+  };
+
   return (
-    <div>
+    <div className="folder width-full max-w-[300px]">
       <div
-        className={`flex items-center gap-1 my-1 rounded-md`}
+        className={`item-name flex items-center gap-1 my-1 py-1 rounded-md cursor-default ${
+          showMenu && "bg-zinc-900"
+        }`}
         onClick={(e) => toggleIsOpen(folder)}
+        onContextMenu={handleContextMenu}
       >
         {folder.isFolder && <Icon isOpen={isOpen} />}
 
@@ -74,6 +91,7 @@ const Folder = ({ folder, handleNewFolder }) => {
           </>
         )}
       </div>
+
       {showInput.open && (
         <div className="pl-6 flex gap-1">
           <FolderIcon isFolder={showInput.isFolder} />
@@ -91,6 +109,16 @@ const Folder = ({ folder, handleNewFolder }) => {
           ></input>
         </div>
       )}
+
+      {showMenu && (
+        <Menu
+          position={position}
+          setShowMenu={setShowMenu}
+          handleNewItem={handleNewItem}
+          isFolder={folder.isFolder}
+        />
+      )}
+
       {isOpen &&
         folder.folders?.map((item) => (
           <div className="pl-6" key={item.name}>

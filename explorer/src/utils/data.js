@@ -11,6 +11,7 @@ export const data = {
       folders: [
         {
           name: ".bin",
+          folders: [],
         },
       ],
     },
@@ -27,16 +28,19 @@ export const data = {
             {
               name: "Header.jsx",
               isFolder: false,
+              folders: [],
             },
             {
               name: "Icon.jsx",
               isFolder: false,
+              folders: [],
             },
           ],
         },
         {
           name: "index.html",
           isFolder: false,
+          folders: [],
         },
       ],
     },

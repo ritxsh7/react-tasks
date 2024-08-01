@@ -16,7 +16,11 @@ const App = () => {
 
   return (
     <div className="p-8">
-      <Folder folder={explorer} handleNewFolder={handleNewFolder} />
+      <Folder
+        folder={explorer}
+        handleNewFolder={handleNewFolder}
+        handleDeleteFolder={handleDeleteFolder}
+      />
     </div>
   );
 };

@@ -17,7 +17,30 @@ const useTraverseTree = () => {
 
     return { ...tree, folders: newNodes };
   }
-  return { insertNode };
+
+  function deleteNodeHelper(tree, folderId) {
+    console.log(tree);
+    for (const folder of tree.folders) {
+      if (folder.id === folderId) {
+        return tree.folders?.filter((f) => f.id != folderId);
+      }
+    }
+    let newNodes = [];
+    newNodes = tree.folders?.map((folder) =>
+      deleteNodeHelper(folder, folderId)
+    );
+    return {
+      ...tree,
+      folders: newNodes,
+    };
+  }
+
+  function deleteNode(tree, folderId) {
+    if (tree.id === folderId) return null;
+    return deleteNodeHelper(tree, folderId);
+  }
+
+  return { insertNode, deleteNode };
 };
 
 export default useTraverseTree;
