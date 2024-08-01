@@ -6,7 +6,7 @@ import { AiOutlineFileAdd } from "react-icons/ai";
 import { RiFolderAddLine } from "react-icons/ri";
 import Menu from "./Menu";
 
-const Folder = ({ folder, handleNewFolder }) => {
+const Folder = ({ folder, handleNewFolder, handleDeleteFolder }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [showMenu, setShowMenu] = useState(false);
@@ -116,13 +116,19 @@ const Folder = ({ folder, handleNewFolder }) => {
           setShowMenu={setShowMenu}
           handleNewItem={handleNewItem}
           isFolder={folder.isFolder}
+          folderId={folder.id}
+          handleDeleteFolder={handleDeleteFolder}
         />
       )}
 
       {isOpen &&
         folder.folders?.map((item) => (
           <div className="pl-6" key={item.name}>
-            <Folder folder={item} handleNewFolder={handleNewFolder} />
+            <Folder
+              folder={item}
+              handleNewFolder={handleNewFolder}
+              handleDeleteFolder={handleDeleteFolder}
+            />
           </div>
         ))}
     </div>

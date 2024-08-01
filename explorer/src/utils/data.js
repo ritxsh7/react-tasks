@@ -26,11 +26,13 @@ export const data = {
           isFolder: true,
           folders: [
             {
+              id: 5,
               name: "Header.jsx",
               isFolder: false,
               folders: [],
             },
             {
+              id: 6,
               name: "Icon.jsx",
               isFolder: false,
               folders: [],
@@ -38,6 +40,7 @@ export const data = {
           ],
         },
         {
+          id: 7,
           name: "index.html",
           isFolder: false,
           folders: [],
