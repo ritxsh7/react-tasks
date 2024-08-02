@@ -32,7 +32,28 @@ const useTraverseTree = () => {
     return tree;
   }
 
-  return { insertNode, deleteNode };
+  function renameNode(tree, folderId, name) {
+    if (tree.id === folderId) {
+      tree.name = name;
+      return tree;
+    }
+
+    let newTree = [];
+
+    if (tree.folders) {
+      newTree = tree.folders.map((folder) =>
+        renameNode(folder, folderId, name)
+      );
+      return {
+        ...tree,
+        folders: newTree,
+      };
+    }
+
+    return tree;
+  }
+
+  return { insertNode, deleteNode, renameNode };
 };
 
 export default useTraverseTree;

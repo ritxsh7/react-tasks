@@ -6,10 +6,19 @@ import { AiOutlineFileAdd } from "react-icons/ai";
 import { RiFolderAddLine } from "react-icons/ri";
 import Menu from "./Menu";
 
-const Folder = ({ folder, handleNewFolder, handleDeleteFolder }) => {
+const Folder = ({
+  folder,
+  handleNewFolder,
+  handleDeleteFolder,
+  handleRename,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [showMenu, setShowMenu] = useState(false);
+
+  const [isEdit, setIsEdit] = useState(false);
+
+  const [name, setName] = useState(folder.name);
 
   const [position, setPosition] = useState({
     x: 0,
@@ -51,6 +60,16 @@ const Folder = ({ folder, handleNewFolder, handleDeleteFolder }) => {
     setPosition({ x: e.pageX, y: e.pageY });
   };
 
+  const handleRenameItem = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleSetRename = (e) => {
+    if (e.key === "Enter" && name) {
+      handleRename(folder.id, name);
+      setIsEdit(false);
+    }
+  };
   return (
     <div className="folder width-full max-w-[300px]">
       <div
@@ -62,7 +81,17 @@ const Folder = ({ folder, handleNewFolder, handleDeleteFolder }) => {
       >
         {folder.isFolder && <Icon isOpen={isOpen} />}
 
-        {folder.isRoot ? (
+        {isEdit ? (
+          <input
+            type="text"
+            autoFocus
+            value={name}
+            onChange={handleRenameItem}
+            onKeyDown={handleSetRename}
+            onBlur={() => setIsEdit(false)}
+            className="p-1"
+          ></input>
+        ) : folder.isRoot ? (
           <ExplorerTitle>{folder.name}</ExplorerTitle>
         ) : (
           <>
@@ -76,6 +105,7 @@ const Folder = ({ folder, handleNewFolder, handleDeleteFolder }) => {
             </p>
           </>
         )}
+
         {folder.isFolder && (
           <>
             <AiOutlineFileAdd
@@ -118,6 +148,7 @@ const Folder = ({ folder, handleNewFolder, handleDeleteFolder }) => {
           isFolder={folder.isFolder}
           folderId={folder.id}
           handleDeleteFolder={handleDeleteFolder}
+          setIsEdit={setIsEdit}
         />
       )}
 
@@ -128,6 +159,7 @@ const Folder = ({ folder, handleNewFolder, handleDeleteFolder }) => {
               folder={item}
               handleNewFolder={handleNewFolder}
               handleDeleteFolder={handleDeleteFolder}
+              handleRename={handleRename}
             />
           </div>
         ))}

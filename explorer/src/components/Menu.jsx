@@ -8,6 +8,7 @@ const Menu = ({
   isFolder,
   handleDeleteFolder,
   folderId,
+  setIsEdit,
 }) => {
   const menuRef = useRef(null);
 
@@ -57,7 +58,7 @@ const Menu = ({
       >
         Delete
       </p>
-      <p className="pt-2" onClick={() => handleDeleteFolder(folderId)}>
+      <p className="pt-2" onClick={() => setIsEdit(true)}>
         Rename
       </p>
     </div>

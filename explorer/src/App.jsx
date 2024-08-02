@@ -7,7 +7,7 @@ import useTraverseTree from "./hooks/useTraverseTree.js";
 const App = () => {
   const [explorer, setExplorer] = useState(data);
 
-  const { insertNode, deleteNode } = useTraverseTree();
+  const { insertNode, deleteNode, renameNode } = useTraverseTree();
 
   const handleNewFolder = (folderId, name, isFolder) => {
     const newTree = insertNode(explorer, folderId, name, isFolder);
@@ -19,12 +19,18 @@ const App = () => {
     setExplorer(newTree);
   };
 
+  const handleRename = (folderId, name) => {
+    const newTree = renameNode(explorer, folderId, name);
+    setExplorer(newTree);
+  };
+
   return (
     <div className="p-8">
       <Folder
         folder={explorer}
         handleNewFolder={handleNewFolder}
         handleDeleteFolder={handleDeleteFolder}
+        handleRename={handleRename}
       />
     </div>
   );
